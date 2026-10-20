@@ -4,6 +4,8 @@
 
 **Default behavior:** starting the environment means starting **only infrastructure services** (database, mail, etc.) — **never** start the NestJS application server unless the user explicitly asks to run/serve the project (e.g., "rode o projeto", "suba o servidor", "run the app").
 
+**Exception:** the video worker (`nestjs-worker`) is a Compose service that starts together with the infrastructure (`docker compose up -d`). It is a separate process (`npm run start:worker`, entrypoint `src/worker.ts`, no HTTP server) and is not the API dev server.
+
 After starting infrastructure, always confirm the containers are up before proceeding:
 
 ```bash
@@ -13,6 +15,8 @@ docker compose ps   # all services must show status "running"
 Then verify each infrastructure service is actually ready to accept connections — not just running:
 
 - **PostgreSQL:** `docker compose exec db pg_isready -U streamtube` — expect `accepting connections`
+- **Redis:** `docker compose exec redis redis-cli ping` - expect `PONG`
+- **Storage (MinIO):** `curl http://localhost:9000/minio/health/live` - expect `200` (the image has no shell, so Compose has no healthcheck for it; the API retries the bucket check at startup)
 
 Only start the NestJS dev server (`npm run start:dev`) when the user **explicitly** asks to run the application — never as part of "start the environment".
 
@@ -33,7 +37,11 @@ docker compose exec nestjs-api npm run start:dev
 
 Services:
 - `nestjs-api` — NestJS API, port `3000`
+- `nestjs-worker` - video queue consumer (FFmpeg), no published port; shares the API image and source mount, so run `docker compose exec nestjs-api npm install` first and `docker compose restart nestjs-worker` if it started before the install
 - `db` — PostgreSQL 17, port `5432`, database `streamtube`, user/password `streamtube`
+- `redis` - Redis 7 (AOF on, `noeviction`), port `6379` inside the Compose network only
+- `storage` - MinIO (S3 API on `9000`, console on `9001`)
+- `mailpit` - SMTP `1025`, web UI `8025`
 
 All verification and teardown commands run on the **host machine**:
 
@@ -60,6 +68,7 @@ docker compose down
 
 ```bash
 npm run start:dev                        # Dev server with hot-reload
+npm run start:worker                     # Video worker with hot-reload (runs in the nestjs-worker service; builds to dist-worker/)
 npm run build                            # Compile to dist/
 npm run start:prod                       # Run compiled build
 
@@ -88,7 +97,7 @@ Integration and e2e suites share a single test database. They **must** be run wi
 
 ```bash
 docker compose exec nestjs-api npm test -- --runInBand
-docker compose exec nestjs-api npm run test:e2e   # already configured
+docker compose exec nestjs-api npm run test:e2e   # already configured (--runInBand)
 ```
 
 Parallel execution causes FK violations, deadlocks, and cross-suite contamination because suites truncate or seed shared tables concurrently.
@@ -100,6 +109,17 @@ During active development, run only the tests related to the file being changed 
 Commands that never exit (dev server, watch modes) must be run in background in the Bash tool — otherwise the agent blocks indefinitely waiting for the process to return.
 
 This applies to: `start:dev`, `start:prod`, `test:watch`, and any other persistent process.
+
+## Storage and Queue Environment
+
+Keys live in `.env` / `.env.example` and are validated by Joi in `src/config/env.validation.ts`:
+
+- `S3_ENDPOINT` (internal, `http://storage:9000`, used by the API and the worker) and `S3_PUBLIC_ENDPOINT` (`http://localhost:9000`, the host baked into URLs the browser uses). A presigned URL only works for the host it was signed with.
+- `S3_REGION`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET`, `S3_FORCE_PATH_STYLE`, `UPLOAD_MAX_BYTES` (10 GiB), `UPLOAD_PART_SIZE_BYTES` (64 MiB; the S3 minimum is 5 MiB) and the URL expiry keys (`S3_*_URL_EXPIRES_SECONDS`).
+- `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`, `MINIO_API_CORS_ALLOW_ORIGIN` (read by the `storage` service; keep the credentials equal to `S3_ACCESS_KEY` / `S3_SECRET_KEY`).
+- `REDIS_HOST` (the Compose service name `redis`), `REDIS_PORT`, `VIDEO_QUEUE_NAME`.
+
+Tests load `src/test/jest-setup.ts` (registered in `package.json` and `test/jest-e2e.json`), which appends `-test` to `VIDEO_QUEUE_NAME` so the dev worker never consumes test jobs, and signs URLs with `S3_ENDPOINT` so the test process can follow them.
 
 ## Test Type Selection
 

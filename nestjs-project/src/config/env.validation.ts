@@ -20,5 +20,27 @@ export const envValidationSchema = Joi.object({
   MAIL_HOST: Joi.string().default('mailpit'),
   MAIL_PORT: Joi.number().default(1025),
   MAIL_FROM: Joi.string().default('"StreamTube" <noreply@streamtube.com>'),
+  S3_ENDPOINT: Joi.string().uri().required(),
+  S3_PUBLIC_ENDPOINT: Joi.string().uri().required(),
+  S3_REGION: Joi.string().default('us-east-1'),
+  S3_ACCESS_KEY: Joi.string().required(),
+  S3_SECRET_KEY: Joi.string().required(),
+  S3_BUCKET: Joi.string().required(),
+  S3_FORCE_PATH_STYLE: Joi.string().valid('true', 'false').default('true'),
+  UPLOAD_MAX_BYTES: Joi.number().integer().positive().default(10737418240),
+  UPLOAD_PART_SIZE_BYTES: Joi.number().integer().min(5242880).default(67108864),
+  S3_PART_URL_EXPIRES_SECONDS: Joi.number().integer().positive().default(3600),
+  S3_STREAM_URL_EXPIRES_SECONDS: Joi.number().integer().positive().default(300),
+  S3_DOWNLOAD_URL_EXPIRES_SECONDS: Joi.number()
+    .integer()
+    .positive()
+    .default(900),
+  S3_WORKER_READ_URL_EXPIRES_SECONDS: Joi.number()
+    .integer()
+    .positive()
+    .default(3600),
+  REDIS_HOST: Joi.string().default('redis'),
+  REDIS_PORT: Joi.number().port().default(6379),
+  VIDEO_QUEUE_NAME: Joi.string().required(),
   SWAGGER_ENABLED: Joi.string().valid('true', 'false').default('false'),
 });
