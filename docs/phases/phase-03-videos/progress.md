@@ -39,6 +39,8 @@
   - The migrations spec now covers 3 migrations; its second test reverts videos then tokens, and also drops the `video_status` type before running.
   - `size_bytes` and `duration_seconds` use column transformers so the pg driver's string output becomes a number.
   - `VideosModule` only has `TypeOrmModule.forFeature([Video])` for now; controller and service arrive in later SIs.
+  - Follow-up fix after the phase commit: the migrations spec dropped tables with `Promise.all`; with `videos` in the FK graph the concurrent `DROP ... CASCADE` calls deadlocked once in a full run. They now run sequentially (4 consecutive full runs green).
+  - Lint (after user decision "fix in a separate commit"): `npm run lint` was red with 150 pre-existing errors, all in files this phase did not change. Fixed in a `chore: lint` commit: untyped-by-nature rules (`no-unsafe-*`, `unbound-method`, `require-await`) turned off for `*.spec.ts`, `*.integration-spec.ts` and `*.e2e-spec.ts` in `eslint.config.mjs`; the real defects fixed in code (`any` in `channels.service.ts`, `Function` type in `create-test-data-source.ts`, two unused variables/imports). Lint now exits 0 (40 `no-unsafe-argument` warnings remain, already configured as warnings).
 
 ### SI-03.5 — Criar rascunho e abrir upload (POST /videos)
 - **Status:** completed

@@ -769,4 +769,4 @@ SI-03.15 — depende de SI-03.8 + SI-03.9 + SI-03.12 + SI-03.14 (fluxo ponta a p
 - [x] Backend tests pass (`cd nestjs-project && docker compose exec nestjs-api npm test -- --runInBand`)
 - [x] E2E tests pass (`cd nestjs-project && docker compose exec nestjs-api npm run test:e2e`)
 - [x] Type/compilation checks pass (`cd nestjs-project && docker compose exec nestjs-api npx tsc --noEmit`)
-- [ ] Lint passes (`cd nestjs-project && docker compose exec nestjs-api npm run lint`)
+- [x] Lint passes (`cd nestjs-project && docker compose exec nestjs-api npm run lint`)
