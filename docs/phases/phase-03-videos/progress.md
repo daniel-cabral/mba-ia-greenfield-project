@@ -90,7 +90,7 @@
   - `WorkerModule` also imports `UsersModule`: with `autoLoadEntities` the `User` entity must be registered for `Channel#user` (and so `Video`) to resolve; without it TypeORM looped on "Entity metadata for Channel#user was not found".
   - `nestjs-worker` boots and logs "Video worker started, waiting for jobs"; it publishes no ports. Separate `dist-worker` outDir (ignored by git and excluded in `tsconfig.build.json`) keeps the two watchers from deleting each other's output.
   - Local `compose.override.yaml` gained the same `node_modules` named volume for `nestjs-worker` (Windows bind-mount workaround, not committed).
-  - Manually verified: `docker compose ps` shows `nestjs-worker` running without published ports, the boot line is in its logs, and the real container consumed a job injected into Redis. Not verified manually: "`start:dev` in `nestjs-api` does not restart the worker, and the reverse", because it requires starting the API dev server, which the project rules say to do only when asked. By construction the two watchers use separate output directories (`dist` and `dist-worker`).
+  - Manually verified: `docker compose ps` shows `nestjs-worker` running without published ports, the boot line is in its logs, and the real container consumed a job injected into Redis. Also verified after the user asked to run the app: with `start:dev` running in `nestjs-api` the API answered 200 and the worker kept its start time with 0 restarts; restarting `nestjs-worker` left the API answering 200. The two watchers use separate output directories (`dist` and `dist-worker`).
 
 ### SI-03.11 — Extrair metadados e thumbnail com FFmpeg
 - **Status:** completed
