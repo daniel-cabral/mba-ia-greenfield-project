@@ -3,7 +3,7 @@ kind: phase
 name: phase-03-videos
 sources_mtime:
   docs/project-plan.md: "2026-10-19T22:00:00.161861200-03:00"
-  docs/decisions/technical-decisions-videos.md: "2026-10-19T23:17:55.845650500-03:00"
+  docs/decisions/technical-decisions-phase-03-videos.md: "2026-10-19T23:17:55.845650500-03:00"
   docs/phases/phase-03-videos/library-refs.md: "2026-10-19T23:19:19.750558200-03:00"
   docs/decisions/technical-decisions-openapi-docs-nestjs.md: "2026-10-19T22:22:22.045042800-03:00"
   docs/phases/phase-01-configuracao-base/context.md: "2026-10-19T22:22:22.048078800-03:00"
@@ -49,54 +49,54 @@ sources_mtime:
 
 | Ref | Source | Scope | Topic | Status | Decision | Libraries |
 |-----|--------|-------|-------|--------|----------|-----------|
-| videos/TD-01 | phase | Backend | Job Queue Technology | decided | A | bullmq, @nestjs/bullmq |
-| videos/TD-02 | phase | Repo-wide | S3-Compatible Storage Service for Compose | decided | A | — |
+| phase-03-videos/TD-01 | phase | Backend | Job Queue Technology | decided | A | bullmq, @nestjs/bullmq |
+| phase-03-videos/TD-02 | phase | Repo-wide | S3-Compatible Storage Service for Compose | decided | A | — |
 |     └─ Last revision: 2026-10-19 - Pinned digest recorded: cgr.dev/chainguard/minio@sha256:2915cb406f38ed6ff… | | | | | | |
-| videos/TD-03 | phase | Backend | Large-File Upload Strategy (up to 10GB) | decided | A | @aws-sdk/client-s3, @aws-sdk/s3-request-presigner |
-| videos/TD-04 | phase | Backend | Upload Completion Trigger and Job Contract | decided | A | — |
-| videos/TD-05 | phase | Backend | Bucket and Object Key Layout | decided | A | — |
-| videos/TD-06 | phase | Backend | Streaming Delivery | decided | A | — |
+| phase-03-videos/TD-03 | phase | Backend | Large-File Upload Strategy (up to 10GB) | decided | A | @aws-sdk/client-s3, @aws-sdk/s3-request-presigner |
+| phase-03-videos/TD-04 | phase | Backend | Upload Completion Trigger and Job Contract | decided | A | — |
+| phase-03-videos/TD-05 | phase | Backend | Bucket and Object Key Layout | decided | A | — |
+| phase-03-videos/TD-06 | phase | Backend | Streaming Delivery | decided | A | — |
 |     └─ Last revision: 2026-10-19 - Wording corrected: the route resolves the slug and requires status ready before… | | | | | | |
-| videos/TD-07 | phase | Backend | Unique Video URL Identifier | decided | A | — |
-| videos/TD-08 | phase | Backend | Worker Runtime and Topology | decided | A | — |
-| videos/TD-09 | phase | Backend | Media Extraction (Metadata and Thumbnail) | decided | A | — |
-| videos/TD-10 | phase | Backend | Video Status Lifecycle and Failure Handling | decided | A | — |
-| videos/TD-11 | phase | Backend | Download Delivery | decided | A | — |
+| phase-03-videos/TD-07 | phase | Backend | Unique Video URL Identifier | decided | A | — |
+| phase-03-videos/TD-08 | phase | Backend | Worker Runtime and Topology | decided | A | — |
+| phase-03-videos/TD-09 | phase | Backend | Media Extraction (Metadata and Thumbnail) | decided | A | — |
+| phase-03-videos/TD-10 | phase | Backend | Video Status Lifecycle and Failure Handling | decided | A | — |
+| phase-03-videos/TD-11 | phase | Backend | Download Delivery | decided | A | — |
 |     └─ Last revision: 2026-10-19 - Wording corrected: the route resolves the slug and requires status ready before… | | | | | | |
-| videos/TD-12 | phase | Backend | Authorization and Video Visibility | decided | A | — |
-| videos/TD-13 | phase | Backend | Video Data Model | decided | A | — |
-| videos/TD-14 | phase | Backend | Storage and Queue Configuration and Bootstrap | decided | A | — |
+| phase-03-videos/TD-12 | phase | Backend | Authorization and Video Visibility | decided | A | — |
+| phase-03-videos/TD-13 | phase | Backend | Video Data Model | decided | A | — |
+| phase-03-videos/TD-14 | phase | Backend | Storage and Queue Configuration and Bootstrap | decided | A | — |
 |     └─ Last revision: 2026-10-19 - Compose details resolved: Redis service redis:7 with healthcheck redis-cli ping;… | | | | | | |
-| videos/TD-15 | phase | Backend | Test Topology for the Worker and Real Infrastructure | decided | A | — |
-| videos/TD-16 | phase | Backend | Upload and Playback API Contract Details | decided | A | — |
-| videos/TD-17 | phase | Backend | Rate Limiting for Video Routes | decided | A | — |
+| phase-03-videos/TD-15 | phase | Backend | Test Topology for the Worker and Real Infrastructure | decided | A | — |
+| phase-03-videos/TD-16 | phase | Backend | Upload and Playback API Contract Details | decided | A | — |
+| phase-03-videos/TD-17 | phase | Backend | Rate Limiting for Video Routes | decided | A | — |
 
 _Source files:_
 
-- videos — `docs/decisions/technical-decisions-videos.md` (scope_type: phase, related_phases: [3])
+- videos — `docs/decisions/technical-decisions-phase-03-videos.md` (scope_type: phase, related_phases: [3])
 
 ## Capability Coverage
 
 | Capability (from project-plan.md) | Covered by |
 |-----------------------------------|------------|
-| Serviço de armazenamento de arquivos (vídeos e thumbnails) | videos/TD-02, videos/TD-05, videos/TD-14 |
-| Serviço de processamento em segundo plano (filas) | videos/TD-01, videos/TD-08, videos/TD-15 |
-| Upload de vídeos com suporte a arquivos de até 10GB sem impacto na performance | videos/TD-03, videos/TD-16, videos/TD-17 |
-| Pré-cadastro automático do vídeo como rascunho ao iniciar o upload | videos/TD-10, videos/TD-12, videos/TD-13 |
-| Processamento automático do vídeo após upload (extração de duração e metadados) | videos/TD-04 |
-| Geração automática de thumbnail a partir de um frame do vídeo | videos/TD-09 |
-| URL única por vídeo, sem conflito com outros vídeos | videos/TD-07 |
-| Reprodução via streaming (sem necessidade de download completo) | videos/TD-06 |
-| Download do vídeo pelo usuário | videos/TD-11 |
+| Serviço de armazenamento de arquivos (vídeos e thumbnails) | phase-03-videos/TD-02, phase-03-videos/TD-05, phase-03-videos/TD-14 |
+| Serviço de processamento em segundo plano (filas) | phase-03-videos/TD-01, phase-03-videos/TD-08, phase-03-videos/TD-15 |
+| Upload de vídeos com suporte a arquivos de até 10GB sem impacto na performance | phase-03-videos/TD-03, phase-03-videos/TD-16, phase-03-videos/TD-17 |
+| Pré-cadastro automático do vídeo como rascunho ao iniciar o upload | phase-03-videos/TD-10, phase-03-videos/TD-12, phase-03-videos/TD-13 |
+| Processamento automático do vídeo após upload (extração de duração e metadados) | phase-03-videos/TD-04 |
+| Geração automática de thumbnail a partir de um frame do vídeo | phase-03-videos/TD-09 |
+| URL única por vídeo, sem conflito com outros vídeos | phase-03-videos/TD-07 |
+| Reprodução via streaming (sem necessidade de download completo) | phase-03-videos/TD-06 |
+| Download do vídeo pelo usuário | phase-03-videos/TD-11 |
 
 ## Decisions Detail
 
-### videos/TD-01
+### phase-03-videos/TD-01
 
 **Recommendation:** BullMQ with @nestjs/bullmq on a Redis Compose service: retries, exponential backoff and stalled-job recovery are built in, so it needs the least code in a NestJS 11 project and runs as a real queue service. Redis runs with AOF (`--appendonly yes`) and `maxmemory-policy noeviction` per the BullMQ production guide, with a named volume. One queue for video processing; its name comes from config.
 **Libraries:** `bullmq`, `@nestjs/bullmq`
 
-### videos/TD-02
+### phase-03-videos/TD-02
 
 **Recommendation:** Run MinIO from `cgr.dev/chainguard/minio` pinned by `@sha256:` digest, because the official MinIO images no longer resolve; this keeps exact MinIO S3 behavior for multipart, presigned URLs, Range and server-wide CORS. A mandatory integration smoke test (create bucket, multipart presigned upload, ListParts, Range GET, browser-origin CORS headers) detects any image swap, with SeaweedFS as fallback. The pull and the digest must be re-verified at plan-resolve because registry state is volatile.
 **Libraries:** —
@@ -104,22 +104,22 @@ _Source files:_
 **Revisions:**
 - 2026-10-19 - Pinned digest recorded: `cgr.dev/chainguard/minio@sha256:2915cb406f38ed6ff9634de0a3e4a9423e2dda06a6f1aca18f8c968aa37a01f6` (OCI index, linux/amd64 and linux/arm64, verified by registry inspection). Image facts from the manifest config: entrypoint `/usr/bin/minio`, user 65532, no shell. The Docker daemon was off during this check, so the real pull and the write permission of user 65532 on the data volume are verified by the storage smoke test during implementation; if the volume is not writable the Compose service sets `user: root`, and if the image fails entirely SeaweedFS is the fallback. Rationale: close OQ-1.
 
-### videos/TD-03
+### phase-03-videos/TD-03
 
 **Recommendation:** `POST /videos` creates the draft row and calls CreateMultipartUpload; the client uploads parts directly to storage through presigned UploadPart URLs, so the API never touches the bytes. This is the S3 equivalent of the YouTube resumable model, is resumable and parallel, and stays within S3 limits (5 MiB minimum part, 10,000 parts). The API enforces the 10GB cap at init (declared size and part count) and re-verifies the real object size at completion.
 **Libraries:** `@aws-sdk/client-s3`, `@aws-sdk/s3-request-presigner`
 
-### videos/TD-04
+### phase-03-videos/TD-04
 
 **Recommendation:** `POST /videos/:id/complete` on a `draft` video lists the uploaded parts with ListParts (paginated), calls CompleteMultipartUpload, checks the HeadObject size against the 10GB cap, sets status `processing` and enqueues the job, in that order. Crash safety: if the row is still `draft` but ListParts fails with NoSuchUpload (the upload was completed before a crash), the service runs HeadObject on the original key and, if the object exists, continues with the status write and the enqueue; if it does not exist the call fails with a domain error. On a video already `processing`, only the enqueue is repeated and the S3 steps are skipped. Events/Messages: job name `video.process` on the queue named by `VIDEO_QUEUE_NAME`, payload `{ videoId }` (the worker reads object key and owner from PostgreSQL, so the message cannot drift from the database), producer `VideosService`, consumer `VideoProcessor` running only in the worker entrypoint, delivery at-least-once with an idempotent consumer (TD-10). Job id = `videoId`: a duplicate id is ignored while the previous job still exists.
 **Libraries:** —
 
-### videos/TD-05
+### phase-03-videos/TD-05
 
 **Recommendation:** One bucket named by config (`S3_BUCKET`) with keys `videos/{videoId}/original` and `videos/{videoId}/thumbnail.jpg`, built from the immutable database id (not the filename or the public slug). Original keys are written once and never renamed; the extension is not part of the key (content type is stored on the object and in the video row). Abandoned multipart uploads are expired by the storage service (see TD-10).
 **Libraries:** —
 
-### videos/TD-06
+### phase-03-videos/TD-06
 
 **Recommendation:** `GET /videos/:slug/stream` authorizes, checks the status, then answers a 302 redirect (TD-16) to a short-lived presigned GET, so storage serves Range (206) directly and the API stays off the byte path. Signing uses `S3_PUBLIC_ENDPOINT`; the API's own storage calls use `S3_ENDPOINT`. In real-infra tests the signing endpoint is overridden to the internal one, and one assertion checks that the production config signs with the public host. Expiry is a few minutes.
 **Libraries:** —
@@ -127,27 +127,27 @@ _Source files:_
 **Revisions:**
 - 2026-10-19 - Wording corrected: the route resolves the slug and requires status `ready` before answering the 302; it performs no authentication because it is `@Public()` (TD-12, TD-16). Rationale: public routes carry no authenticated user.
 
-### videos/TD-07
+### phase-03-videos/TD-07
 
 **Recommendation:** Generate 8 random bytes encoded as an 11-character base64url slug with `crypto.randomBytes`, stored in a unique-indexed `slug` column and retried on collision. It avoids the ESM-only `nanoid` friction with Jest in this CommonJS project. The slug is a separate column: not the primary key and not part of storage keys (TD-05).
 **Libraries:** —
 
-### videos/TD-08
+### phase-03-videos/TD-08
 
 **Recommendation:** The worker is a Nest standalone application context started from a second entrypoint (`src/worker.ts`) by a `start:worker` script (`nest start --entryFile worker` in dev), in a Compose service `nestjs-worker` built from the same code and image, so entities, repositories and config are reused. The `VideoProcessor` is registered only in the worker's module, never in the API's `VideosModule`. The service sets `command: npm run start:worker`, `depends_on` db, redis and storage, and a restart policy; dependencies must already be installed (`docker compose exec nestjs-api npm install`, same as the API). Starting the worker is the documented exception to the project rule of not starting the Nest app unprompted, because Compose runs it as a service. FFmpeg is installed once in the shared dev image (see TD-15).
 **Libraries:** —
 
-### videos/TD-09
+### phase-03-videos/TD-09
 
 **Recommendation:** The worker spawns `ffprobe` (JSON output) and `ffmpeg` with `child_process`, reading the input over HTTP from a URL signed with the internal endpoint, so a 10GB file is not downloaded; one frame is extracted and uploaded to the thumbnail key. Downloading to temp disk first is the documented fallback if HTTP input proves flaky in integration tests. The frame-selection rule (a fixed offset or a proportion of the duration, clamped for short videos) is a plan-build detail. A file with no video stream is a permanent failure and ends in `error`.
 **Libraries:** —
 
-### videos/TD-10
+### phase-03-videos/TD-10
 
 **Recommendation:** Statuses: `draft` (row created at init), `processing` (set at completion), `ready` (worker success), `error` (final failure). The queue uses `attempts: 3` with exponential backoff; permanent failures (for example no video stream) skip retries via BullMQ `UnrecoverableError`. `error` plus `failure_reason` is written by the worker `failed` listener when the last attempt fails or an `UnrecoverableError` is raised, so jobs that fail by stalling past `maxStalledCount` also end in `error`, not only exceptions thrown inside the processor. Job options: `removeOnComplete: true` and `removeOnFail` kept by age so failures stay inspectable. Transitions are guarded in the service. The consumer is idempotent: a job that finds the video already `ready` exits. Stale multipart uploads expire in storage (MinIO `MINIO_API_STALE_UPLOADS_EXPIRY`, default 24h; AWS lifecycle `AbortIncompleteMultipartUpload`).
 **Libraries:** —
 
-### videos/TD-11
+### phase-03-videos/TD-11
 
 **Recommendation:** `GET /videos/:slug/download` applies the same slug and status checks as streaming and answers a 302 redirect to a presigned GET with `ResponseContentDisposition=attachment` and a sanitized filename, with a longer expiry than the stream URL.
 **Libraries:** —
@@ -155,17 +155,17 @@ _Source files:_
 **Revisions:**
 - 2026-10-19 - Wording corrected: the route resolves the slug and requires status `ready` before answering the 302; it performs no authentication because it is `@Public()` (TD-12, TD-16). Rationale: public routes carry no authenticated user.
 
-### videos/TD-12
+### phase-03-videos/TD-12
 
 **Recommendation:** Owner-only for init, parts, complete and detail; `@Public()` stream/download only for `ready`; non-owners and unknown ids get 404; the owner is resolved from user to channel through the channels module (single responsibility). Visibility settings (public/unlisted) are out of scope until Fase 04.
 **Libraries:** —
 
-### videos/TD-13
+### phase-03-videos/TD-13
 
 **Recommendation:** Table `videos`: `id` uuid PK; `channel_id` FK to channels (`ON DELETE RESTRICT`, no channel-deletion flow exists and it avoids orphaned objects); `title` (optional at init, defaults to the sanitized original filename); `slug` with a unique index; `status` as a database enum (`draft | processing | ready | error`); `upload_id`; `original_key`; `thumbnail_key` nullable; `size_bytes` bigint; `mime_type`; `duration_seconds` nullable numeric; `metadata` nullable jsonb (rest of the ffprobe output); `failure_reason` nullable; timestamps. `channel_id` is resolved through the channels module rather than a direct query on another domain's table.
 **Libraries:** —
 
-### videos/TD-14
+### phase-03-videos/TD-14
 
 **Recommendation:** Add `storage.config.ts` and `queue.config.ts` registered like the existing namespaces, validated by Joi and listed in `.env.example`. Storage keys: `S3_ENDPOINT`, `S3_PUBLIC_ENDPOINT`, `S3_REGION`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET`, `S3_FORCE_PATH_STYLE`, `UPLOAD_MAX_BYTES` (10 GiB = 10737418240), presign expiries for part, stream, download and the worker's internal read, and `MINIO_API_CORS_ALLOW_ORIGIN` on the storage service. Queue keys: `REDIS_HOST` (Compose service name), `REDIS_PORT`, `VIDEO_QUEUE_NAME`. Redis image `redis:7` (BullMQ needs 6.2 or newer). A storage module ensures the bucket idempotently at startup (HeadBucket then CreateBucket). The published storage port that `S3_PUBLIC_ENDPOINT` points at, the MinIO digest and the Compose healthchecks for storage and Redis are settled at plan-resolve after checking the image entrypoint and user.
 **Libraries:** —
@@ -173,17 +173,17 @@ _Source files:_
 **Revisions:**
 - 2026-10-19 - Compose details resolved: Redis service `redis:7` with healthcheck `redis-cli ping`; the MinIO service has no healthcheck (the pinned image has no shell or curl), so dependents use `depends_on` with `service_started` and the bucket-ensure step retries until storage answers. Published ports: 9000 (S3 API, `S3_PUBLIC_ENDPOINT=http://localhost:9000`) and 9001 (console). The MinIO command is `server /data --console-address ":9001"`. Rationale: close OQ-2.
 
-### videos/TD-15
+### phase-03-videos/TD-15
 
 **Recommendation:** Install the `ffmpeg` apt package in `Dockerfile.dev`, used by both services. Tests isolate themselves with a Jest setup file that sets `process.env.VIDEO_QUEUE_NAME` (and `S3_PUBLIC_ENDPOINT` for the signing override of TD-06) before the app modules load; dotenv does not override variables that are already set, so the worker container keeps its own `.env` values and never takes test jobs. Integration tests run the `VideoProcessor` in-process against the real Redis, storage and PostgreSQL, and generate the sample video with `ffmpeg -f lavfi -i testsrc`; the producer is exercised through e2e of the complete endpoint. Integration and e2e runs stay `--runInBand`.
 **Libraries:** —
 
-### videos/TD-16
+### phase-03-videos/TD-16
 
 **Recommendation:** `POST /videos/:id/parts` signs the requested part numbers on demand (draft videos only). Stream and download answer 302 to the presigned GET so a `<video src>` works directly; these public routes carry no authenticated user, so a non-`ready` video is 404 for everyone including its owner, who reads status through `GET /videos/:id` (owner only, returns status and failure reason). `POST /videos/:id/complete` follows TD-04: on `processing` it only re-enqueues and returns 200; on `ready` or `error` it returns 409. Owner endpoints use `:id`; public endpoints use `:slug`. Error Catalog codes: `VIDEO_NOT_FOUND` (404: unknown id/slug, non-owner, or non-ready on public routes), `VIDEO_UPLOAD_TOO_LARGE` (400: declared size above 10 GiB), `VIDEO_INVALID_PART` (400: invalid part number or count), `VIDEO_UPLOAD_INCOMPLETE` (400: zero parts or part count differing from the declared one), `VIDEO_NOT_DRAFT` (409: parts requested on a non-draft video), `VIDEO_UPLOAD_EXPIRED` (409: NoSuchUpload and no object in storage), `VIDEO_ALREADY_FINALIZED` (409: complete on a `ready` or `error` video). The new endpoints are documented with `@nestjs/swagger` (302 responses included) and `openapi.json` is regenerated.
 **Libraries:** —
 
-### videos/TD-17
+### phase-03-videos/TD-17
 
 **Recommendation:** Apply `@SkipThrottle()` to the parts, stream and download routes and keep the global throttler on init and complete. Record the correction against phase-02-auth/TD-08: the throttler is application-wide, not scoped to the auth module.
 **Libraries:** —

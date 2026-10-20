@@ -239,7 +239,7 @@ _Subprojects in scope:_
 **Decision:** A (@nestjs/throttler)
 
 **Revisions:**
-- 2026-10-19 - Factual correction: in the delivered code the throttler is registered as a global `APP_GUARD` (`ThrottlerModule.forRoot` with ttl 60000 and limit 10 in `auth.module.ts`), so it applies application-wide, not only to `AuthModule`; other modules must opt out with `@SkipThrottle()` (see videos/TD-17). Rationale: verified in `nestjs-project/src/auth/auth.module.ts` during phase 03 planning.
+- 2026-10-19 - Factual correction: in the delivered code the throttler is registered as a global `APP_GUARD` (`ThrottlerModule.forRoot` with ttl 60000 and limit 10 in `auth.module.ts`), so it applies application-wide, not only to `AuthModule`; other modules must opt out with `@SkipThrottle()` (see phase-03-videos/TD-17). Rationale: verified in `nestjs-project/src/auth/auth.module.ts` during phase 03 planning.
 
 ---
 

@@ -55,7 +55,7 @@ Rules to keep:
 - Storage keys are `videos/{id}/original` and `videos/{id}/thumbnail.jpg`, built from the database id, never from the file name or slug.
 - Presigned URLs bind to the host that signed them: browser URLs use `S3_PUBLIC_ENDPOINT`, worker reads use `S3_ENDPOINT`.
 - `@nestjs/bullmq` is pinned to 11.x because 12.x is ESM-only and the project (and Jest) is CommonJS; `ioredis` is a direct dependency (bullmq 6 does not bundle it).
-- Decisions for this phase are in `docs/decisions/technical-decisions-videos.md`; plan and progress are in `docs/phases/phase-03-videos/`.
+- Decisions for this phase are in `docs/decisions/technical-decisions-phase-03-videos.md`; plan and progress are in `docs/phases/phase-03-videos/`.
 
 ## Docker Networking
 
