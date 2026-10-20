@@ -24,6 +24,8 @@ sources_mtime:
 
 Versions are the latest published on npm at planning time (`npm view`, 2026-10-19). `@nestjs/bullmq@12` declares peer dependencies `bullmq ^3 || ^4 || ^5 || ^6` and `@nestjs/core ^10 || ^11 || ^12`, so it fits the installed NestJS 11. Excerpts below come from Context7; items marked "verify at implementation" were not in the fetched excerpts.
 
+> **Implementation note (SI-03.7):** `@nestjs/bullmq` was installed at `11.0.5`, not `^12`. Versions 12 (and `@nestjs/bull-shared` 12) are ESM-only and cannot be loaded by the project's CommonJS build and Jest. 11.0.5 accepts `bullmq ^6` and Nest 11. `bullmq` 6 also needs `ioredis` installed explicitly (added as a dependency).
+
 ### bullmq
 
 - `Queue.add(name, data, opts)`: `opts.jobId` makes duplicates idempotent. A second `add` with the same `jobId` is ignored while the first job still exists; if `removeOnComplete` or `removeOnFail` has removed it, the id is accepted again. This is the basis of videos/TD-04 (job id = `videoId`) and TD-10.

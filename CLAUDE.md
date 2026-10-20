@@ -23,8 +23,39 @@ See `docs/diagrams/software-arch.mermaid` for the full diagram. Key containers:
 - **Video Worker** (FFmpeg) → consumes jobs from queue, processes videos, updates DB and storage
 - **Database** (PostgreSQL) → users, channels, videos, comments, likes
 - **Object Storage** (S3/MinIO) → video files and thumbnails
-- **Message Queue** (TBD) → video processing job queue
+- **Message Queue** (BullMQ on Redis) → video processing job queue (`video.process`)
 - **Email Service** (SMTP) → account confirmation and password recovery
+
+## Videos (Phase 03, backend)
+
+Videos are uploaded by the browser straight to object storage with an S3 multipart upload; the API only coordinates and never carries file bytes. The code lives in:
+
+- `nestjs-project/src/videos/` - `videos.controller.ts` (routes), `videos.service.ts` (upload session, ownership, completion, playback URLs, status transitions), `entities/video.entity.ts`, `dto/`, `video.processor.ts` (queue consumer), `media-extraction.service.ts` (ffprobe/ffmpeg over a signed URL), `slug.util.ts`, `filename.util.ts`, `download-filename.util.ts`, `frame-time.util.ts`.
+- `nestjs-project/src/storage/` - `StorageService`: two S3 clients (internal endpoint for API/worker calls, public endpoint only to sign browser URLs), multipart operations, bucket ensure at startup.
+- `nestjs-project/src/queue/` - `QueueModule` (BullMQ), job name `video.process`, payload `{ videoId }`, `jobId` = video id, 3 attempts with exponential backoff.
+- `nestjs-project/src/worker.ts` and `nestjs-project/src/worker.module.ts` - the worker entrypoint (standalone Nest context, no HTTP); the `VideoProcessor` is registered only here. Runs as the `nestjs-worker` Compose service.
+- `nestjs-project/src/config/root-modules.ts` - config and database root modules shared by `AppModule` and `WorkerModule`.
+- `nestjs-project/src/database/migrations/1792489888882-CreateVideos.ts` - the `videos` table and `video_status` enum.
+- `nestjs-project/test/videos-flow.e2e-spec.ts` (and the other `nestjs-project/test/videos-*.e2e-spec.ts`) with the test plans in `nestjs-project/specs/`.
+
+Endpoints (contract in `nestjs-project/openapi.json`):
+
+| Route | Access | Behavior |
+|-------|--------|----------|
+| `POST /videos` | authenticated | Creates a `draft` in the caller's channel and opens the multipart upload |
+| `POST /videos/:id/parts` | owner | Signs part URLs on demand; `@SkipThrottle()` |
+| `POST /videos/:id/complete` | owner | ListParts, CompleteMultipartUpload, size check, `processing`, enqueue; crash-safe and repeatable |
+| `GET /videos/:id` | owner | Status, duration and `failureReason` |
+| `GET /videos/:slug/stream` | public, `ready` only | `302` to a presigned GET (Range served by storage); `@SkipThrottle()` |
+| `GET /videos/:slug/download` | public, `ready` only | `302` to a presigned GET with an attachment disposition; `@SkipThrottle()` |
+
+Rules to keep:
+
+- Status flow is `draft` -> `processing` -> `ready` | `error`, written with guarded updates (`WHERE status = 'processing'`). Non-owners and unknown ids get `404 VIDEO_NOT_FOUND`; non-`ready` videos are `404` on public routes, even for the owner.
+- Storage keys are `videos/{id}/original` and `videos/{id}/thumbnail.jpg`, built from the database id, never from the file name or slug.
+- Presigned URLs bind to the host that signed them: browser URLs use `S3_PUBLIC_ENDPOINT`, worker reads use `S3_ENDPOINT`.
+- `@nestjs/bullmq` is pinned to 11.x because 12.x is ESM-only and the project (and Jest) is CommonJS; `ioredis` is a direct dependency (bullmq 6 does not bundle it).
+- Decisions for this phase are in `docs/decisions/technical-decisions-videos.md`; plan and progress are in `docs/phases/phase-03-videos/`.
 
 ## Docker Networking
 

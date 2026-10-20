@@ -743,30 +743,30 @@ SI-03.15 — depende de SI-03.8 + SI-03.9 + SI-03.12 + SI-03.14 (fluxo ponta a p
 
 ## Deliverables
 
-- [ ] SI-03.1 — Preparar infraestrutura Docker (Infra)
-- [ ] SI-03.2 — Instalar libs, configs e ambiente de teste (Infra)
-- [ ] SI-03.3 — Criar módulo de storage S3
-- [ ] SI-03.4 — Criar entidade Video, migration, slug e exceções de domínio
-- [ ] SI-03.5 — Criar rascunho e abrir upload (POST /videos)
-- [ ] SI-03.6 — Assinar partes do upload (POST /videos/:id/parts)
-- [ ] SI-03.7 — Criar módulo de fila BullMQ
-- [ ] SI-03.8 — Finalizar upload e enfileirar processamento (POST /videos/:id/complete)
-- [ ] SI-03.9 — Consultar status do vídeo (GET /videos/:id)
-- [ ] SI-03.10 — Criar entrypoint do worker e serviço no Compose
-- [ ] SI-03.11 — Extrair metadados e thumbnail com FFmpeg
-- [ ] SI-03.12 — Implementar o VideoProcessor e o tratamento de falha
-- [ ] SI-03.13 — Reproduzir vídeo por streaming (GET /videos/:slug/stream)
-- [ ] SI-03.14 — Baixar vídeo (GET /videos/:slug/download)
-- [ ] SI-03.15 — Validar o fluxo completo de upload ponta a ponta
-- [ ] SI-03.16 — Atualizar OpenAPI e documentação de IA
+- [x] SI-03.1 — Preparar infraestrutura Docker (Infra)
+- [x] SI-03.2 — Instalar libs, configs e ambiente de teste (Infra)
+- [x] SI-03.3 — Criar módulo de storage S3
+- [x] SI-03.4 — Criar entidade Video, migration, slug e exceções de domínio
+- [x] SI-03.5 — Criar rascunho e abrir upload (POST /videos)
+- [x] SI-03.6 — Assinar partes do upload (POST /videos/:id/parts)
+- [x] SI-03.7 — Criar módulo de fila BullMQ
+- [x] SI-03.8 — Finalizar upload e enfileirar processamento (POST /videos/:id/complete)
+- [x] SI-03.9 — Consultar status do vídeo (GET /videos/:id)
+- [x] SI-03.10 — Criar entrypoint do worker e serviço no Compose
+- [x] SI-03.11 — Extrair metadados e thumbnail com FFmpeg
+- [x] SI-03.12 — Implementar o VideoProcessor e o tratamento de falha
+- [x] SI-03.13 — Reproduzir vídeo por streaming (GET /videos/:slug/stream)
+- [x] SI-03.14 — Baixar vídeo (GET /videos/:slug/download)
+- [x] SI-03.15 — Validar o fluxo completo de upload ponta a ponta
+- [x] SI-03.16 — Atualizar OpenAPI e documentação de IA
 
 **Infraestrutura:**
 
-- [ ] `cd nestjs-project && docker compose up -d` sobe `db`, `mailpit`, `redis`, `storage`, `nestjs-api` e `nestjs-worker`, todos em status running (`docker compose ps`)
+- [x] `cd nestjs-project && docker compose up -d` sobe `db`, `mailpit`, `redis`, `storage`, `nestjs-api` e `nestjs-worker`, todos em status running (`docker compose ps`)
 
 **Full test suites:**
 
-- [ ] Backend tests pass (`cd nestjs-project && docker compose exec nestjs-api npm test -- --runInBand`)
-- [ ] E2E tests pass (`cd nestjs-project && docker compose exec nestjs-api npm run test:e2e`)
-- [ ] Type/compilation checks pass (`cd nestjs-project && docker compose exec nestjs-api npx tsc --noEmit`)
+- [x] Backend tests pass (`cd nestjs-project && docker compose exec nestjs-api npm test -- --runInBand`)
+- [x] E2E tests pass (`cd nestjs-project && docker compose exec nestjs-api npm run test:e2e`)
+- [x] Type/compilation checks pass (`cd nestjs-project && docker compose exec nestjs-api npx tsc --noEmit`)
 - [ ] Lint passes (`cd nestjs-project && docker compose exec nestjs-api npm run lint`)

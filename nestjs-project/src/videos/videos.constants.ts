@@ -1,0 +1,1 @@
+export const MAX_PARTS_PER_SIGN_REQUEST = 100;
